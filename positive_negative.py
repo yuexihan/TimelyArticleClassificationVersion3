@@ -14,10 +14,16 @@ for day in range(1, 13):
     article_id_to_info = {}
     folder = 'data/article_info'
     for line in open(os.path.join(folder, day), encoding='utf-8'):
+        if len(line.split('\t')) != 5:
+            print(line)
+            continue
         push_time, inner_unique_id, teg_channel, pub_site_name, quality_score = line.split('\t')
-        if push_time and inner_unique_id and teg_channel and pub_site_name:
+        if push_time and inner_unique_id and teg_channel and pub_site_name and teg_channel in channel_name_to_id:
             push_time = date.fromtimestamp(int(push_time))
             article_id_to_info[inner_unique_id] = Article('', channel_name_to_id[teg_channel], push_time, pub_site_name)
+        else:
+            print(line)
+            continue
 
     f_positive = open('data/' + day + '.positive', 'w', encoding='utf-8')
     f_negative = open('data/' + day + '.negative', 'w', encoding='utf-8')
