@@ -15,6 +15,7 @@ for day in range(2, 12):
         if len(line.split()) < 50:
             continue
         ids.append(inner_id)
+    ids = list(set(ids))
     random.shuffle(ids)
     ids = set(ids[:10000])
     for line in tqdm(open(file, encoding='utf-8')):
@@ -34,6 +35,7 @@ for day in range(2, 12):
         if len(line.split()) < 50:
             continue
         ids.append(inner_id)
+    ids = list(set(ids))
     random.shuffle(ids)
     ids = set(ids[:10000])
     for line in tqdm(open(file, encoding='utf-8')):
