@@ -36,7 +36,10 @@ class Loader(object):
         data = []
         for line in f:
             _, rest = line.split('\t', 1)
-            words = rest.split()[:500]
+            words = rest.split()
+            # truncate to 20%
+            words = words[:(len(words)//5)]
+            words = words[:500]
             vectors = []
             for w in words:
                 if w in self.w2id:

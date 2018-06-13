@@ -71,7 +71,6 @@ class CnnMaxPool(object):
     def train(self):
         sess = self.sess
         sess.run(tf.global_variables_initializer())
-        last_time = time.time()
         for i in range(FLAGS.epoch):
             for step in range(100000 // 32):
                 inputs, lens, labels = self.loader.next_batch()
