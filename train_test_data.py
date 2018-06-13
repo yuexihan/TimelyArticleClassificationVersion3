@@ -1,52 +1,41 @@
 import random
+from glob import glob
+from datetime import date
 
-f_p = open('data/positive.txt', 'r', encoding='utf-8')
-f_p_train = open('data/positive.train', 'w', encoding='utf-8')
-f_p_test = open('data/positive.test', 'w', encoding='utf-8')
+f_p = open('data/positive.train', 'w', encoding='utf-8')
+f_n = open('data/negative.train', 'w', encoding='utf-8')
 
-lines = []
-for line in f_p:
-    if len(line.split()) < 50:
-        continue
-    lines.append(line)
-    if len(lines) == 63:
-        random.shuffle(lines)
-        for x in lines[:8]:
-            f_p_train.write(x)
-        for x in lines[8:10]:
-            f_p_test.write(x)
-        lines = []
-random.shuffle(lines)
-for x in lines[:8]:
-    f_p_train.write(x)
-for x in lines[8:]:
-    f_p_test.write(x)
-lines = []
-f_p.close()
-f_p_train.close()
-f_p_test.close()
+for day in range(2, 12):
+    day = date(2018, 6, day)
+    day = day.strftime('%Y%m%d')
+    file = 'data/%s.positive' % day
+    ids = []
+    for line in open(file, encoding='utf-8'):
+        inner_id, rest = line.split('\t', 1)
+        if len(line.split()) < 50:
+            continue
+        ids.append(inner_id)
+    random.shuffle(ids)
+    ids = set(ids[:10000])
+    for line in open(file, encoding='utf-8'):
+        inner_id, rest = line.split('\t', 1)
+        if inner_id in ids:
+            f_p.write(line)
 
-f_n = open('data/negative.txt', 'r', encoding='utf-8')
-f_n_train = open('data/negative.train', 'w', encoding='utf-8')
-f_n_test = open('data/negative.test', 'w', encoding='utf-8')
 
-for line in f_n:
-    if len(line.split()) < 50:
-        continue
-    lines.append(line)
-    if len(lines) == 144:
-        random.shuffle(lines)
-        for x in lines[:8]:
-            f_n_train.write(x)
-        for x in lines[8:10]:
-            f_n_test.write(x)
-        lines = []
-random.shuffle(lines)
-for x in lines[:8]:
-    f_n_train.write(x)
-for x in lines[8:]:
-    f_n_test.write(x)
-lines = []
-f_n.close()
-f_n_train.close()
-f_n_test.close()
+for day in range(2, 12):
+    day = date(2018, 6, day)
+    day = day.strftime('%Y%m%d')
+    file = 'data/%s.negative' % day
+    ids = []
+    for line in open(file, encoding='utf-8'):
+        inner_id, rest = line.split('\t', 1)
+        if len(line.split()) < 50:
+            continue
+        ids.append(inner_id)
+    random.shuffle(ids)
+    ids = set(ids[:10000])
+    for line in open(file, encoding='utf-8'):
+        inner_id, rest = line.split('\t', 1)
+        if inner_id in ids:
+            f_n.write(line)
