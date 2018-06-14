@@ -8,7 +8,7 @@ class Loader(object):
         self.w2id, self.id2v = self.load_word_vector()
         self.p_train = self.load_data('data/positive.train', 1)
         self.n_train = self.load_data('data/negative.train', 0)
-        # self.test = self.load_data('data/positive.test', 1) + self.load_data('data/negative.test', 0)
+        self.test = self.load_data('20180612.positive', 1) + self.load_data('20180612.negative', 0)
         self.p_i = 0
         self.n_i = 0
         self.w2id = [([i], w) for w, i in self.w2id.items()]

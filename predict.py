@@ -8,6 +8,8 @@ from tf_model import CnnMaxPool, FLAGS, flags
 import tensorflow as tf
 import csv
 
+flags.DEFINE_string('predictions', 'data/predictions', 'file to save predictions')
+
 article_id_to_info = {}
 folder = 'article_info_new'
 for file_name in tqdm(os.listdir(folder)):
@@ -28,7 +30,7 @@ tf.train.Saver().restore(model.sess, FLAGS.save)
 loader = model.loader
 general_proc = CGeneralProc('kd_content_mining.xml')
 
-f_output = open('predict.txt', 'w', encoding='utf-8')
+f_output = open(FLAGS.predictions, 'w', encoding='utf-8')
 writer = csv.writer(f_output, delimiter='\t')
 blank = re.compile(r'\s')
 folder = 'article_tokens_new'
