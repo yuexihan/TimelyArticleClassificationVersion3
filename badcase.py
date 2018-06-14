@@ -14,5 +14,6 @@ for a, b in zip(itertools.chain(open('data/20180612.positive', encoding='utf-8')
     if i < 34431 and float(b) < 0 or i >= 34431 and float(b) > 0:
         f.write(a)
         f.write(b)
+    i += 1
 
 f.close()
